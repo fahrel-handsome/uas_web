@@ -15,7 +15,7 @@
             @endif
 
             <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-                <p class="text-blue-900"><strong>Nilai Minimum:</strong> {{ $quiz->passing_score }}%</p>
+                <p class="text-blue-900"><strong>Nilai Minimum:</strong> 90%</p>
                 <p class="text-blue-900"><strong>Total Soal:</strong> {{ $quiz->questions->count() }}</p>
             </div>
 

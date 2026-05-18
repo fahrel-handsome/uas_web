@@ -62,7 +62,7 @@ Route::middleware('auth')->group(function () {
     // Quizzes (protected)
     Route::get('/courses/{course}/quizzes/{quiz}', [QuizController::class, 'show'])->name('quizzes.show');
     Route::post('/courses/{course}/quizzes/{quiz}/submit', [QuizController::class, 'submit'])->name('quizzes.submit');
-    Route::get('/courses/{course}/quizzes/{quiz}/result', [QuizController::class, 'result'])->name('quizzes.result');
+    Route::get('/courses/{course}/quizzes/{quiz}/result/{answer}', [QuizController::class, 'result'])->name('quizzes.result');
 
     // Pre-test / Post-test
     Route::get('/modules/{module}/pre-test', [QuizController::class, 'preTest'])->name('modules.pre-test');
@@ -106,6 +106,23 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::patch('/users/{user}/role', [AdminUserController::class, 'updateRole'])->name('users.role');
     Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
     Route::get('/modules', [AdminModuleController::class, 'index'])->name('modules.index');
+    Route::get('/modules/create', [AdminModuleController::class, 'create'])->name('modules.create');
+    Route::post('/modules', [AdminModuleController::class, 'store'])->name('modules.store');
+    Route::get('/modules/{module}/edit', [AdminModuleController::class, 'edit'])->name('modules.edit');
+    Route::put('/modules/{module}', [AdminModuleController::class, 'update'])->name('modules.update');
+    Route::delete('/modules/{module}', [AdminModuleController::class, 'destroy'])->name('modules.destroy');
+    
+    // Courses & Lessons CRUD
+    Route::resource('courses', \App\Http\Controllers\Admin\AdminCourseController::class);
+    Route::resource('courses.lessons', \App\Http\Controllers\Admin\AdminLessonController::class)->except(['index', 'show']);
+
+    // Quizzes (Pre-test & Post-test) CRUD
+    Route::get('/modules/{module}/quizzes', [\App\Http\Controllers\Admin\AdminQuizController::class, 'index'])->name('quizzes.index');
+    Route::get('/quizzes/{quiz}/questions', [\App\Http\Controllers\Admin\AdminQuizController::class, 'manageQuestions'])->name('quizzes.questions');
+    Route::post('/quizzes/{quiz}/questions', [\App\Http\Controllers\Admin\AdminQuizController::class, 'storeQuestion'])->name('quizzes.questions.store');
+    Route::put('/quizzes/{quiz}/questions/{question}', [\App\Http\Controllers\Admin\AdminQuizController::class, 'updateQuestion'])->name('quizzes.questions.update');
+    Route::delete('/quizzes/{quiz}/questions/{question}', [\App\Http\Controllers\Admin\AdminQuizController::class, 'destroyQuestion'])->name('quizzes.questions.destroy');
+
     Route::get('/reports', [AdminDashboardController::class, 'reports'])->name('reports');
 });
 

@@ -27,9 +27,10 @@
                     @if($lesson->video_url)
                         @php
                             $videoUrl = $lesson->video_url;
-                            if (preg_match('/(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $videoUrl, $matches)) {
-                                $videoId = $matches[2];
-                                $videoUrl = 'https://www.youtube.com/embed/' . $videoId;
+                            // Extract video ID from any youtube url (watch, youtu.be, embed, nocookie)
+                            if (preg_match('/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/|youtube-nocookie\.com\/embed\/)([a-zA-Z0-9_-]+)/', $videoUrl, $matches)) {
+                                $videoId = $matches[1];
+                                $videoUrl = 'https://www.youtube-nocookie.com/embed/' . $videoId . '?rel=0';
                             }
                         @endphp
                         <div class="mb-8 rounded-xl overflow-hidden shadow-md">

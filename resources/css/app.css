@@ -426,6 +426,61 @@
   }
   input:checked + .toggle-slider { background: #0b7443; }
   input:checked + .toggle-slider::before { transform: translateX(20px); }
+
+  /* DANGER BUTTON */
+  .btn-danger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #fee2e2;
+    color: #dc2626;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 12px;
+    border: 1.5px solid #fecaca;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-danger:hover { background: #fca5a5; transform: translateY(-1px); }
+
+  /* GHOST BUTTON */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: transparent;
+    color: #5b616b;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 12px;
+    border: 1.5px solid #e5e7eb;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { background: #eceff4; color: #000; }
+
+  /* CARD VARIANTS */
+  .card-peach {
+    background: linear-gradient(135deg, #fee9d1 0%, #ffdcb4 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(113,80,57,0.1);
+  }
+  .card-mint {
+    background: linear-gradient(135deg, #d1fadf 0%, #e1fdea 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(11,116,67,0.1);
+  }
+
+  /* STORY-SCROLL / FLOW-ART sections */
+  .flow-art-container {
+    will-change: transform;
+  }
 }
 
 /* ===== UTILITIES ===== */

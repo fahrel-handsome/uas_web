@@ -9,19 +9,19 @@
                 <div class="mb-4">
                     <span class="text-6xl">🎉</span>
                 </div>
-                <h1 class="text-4xl font-bold text-green-600 mb-4">Selamat! Anda Lulus!</h1>
+                <h1 class="text-3xl font-bold text-green-600 mb-4">Selamat Anda telah menyelesaikan kursus ini, silahkan download sertifikat Anda ke halaman sertifikat</h1>
             @else
                 <div class="mb-4">
                     <span class="text-6xl">📚</span>
                 </div>
                 <h1 class="text-4xl font-bold text-red-600 mb-4">Coba Lagi</h1>
-                <p class="text-gray-600 mb-4">Jangan menyerah! Pelajari kembali materi dan coba lagi.</p>
+                <p class="text-gray-600 mb-4">Nilai Anda di bawah 90%. Silahkan mengulang kembali!</p>
             @endif
 
             <div class="bg-gradient-to-r from-blue-100 to-blue-50 rounded-lg p-8 mb-8">
                 <p class="text-gray-600 text-lg mb-2">Nilai Anda</p>
                 <p class="text-6xl font-bold text-blue-600">{{ $answer->score }}%</p>
-                <p class="text-gray-600 mt-2">Nilai Minimum: {{ $quiz->passing_score }}%</p>
+                <p class="text-gray-600 mt-2">Nilai Minimum: 90%</p>
             </div>
 
             <div class="space-y-4 mb-8">

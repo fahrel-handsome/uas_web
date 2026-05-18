@@ -1,215 +1,348 @@
 @extends('layout')
-
 @section('title', 'CerdasFin — Platform Literasi Keuangan Indonesia')
-@section('meta_description', 'Pelajari literasi keuangan, lindungi diri dari pinjol ilegal dan judi online. Platform edukasi finansial interaktif untuk masyarakat Indonesia.')
+@section('meta_description', 'Belajar literasi keuangan, hindari pinjol ilegal & judi online bersama CerdasFin. Platform edukasi finansial terpercaya untuk masyarakat Indonesia.')
 
 @section('content')
 
-{{-- ===== HERO ===== --}}
-<section class="hero-gradient py-24 overflow-hidden relative">
-    <div class="container-cf relative z-10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div class="animate-fade-in-up">
-                <div class="badge-green mb-6 inline-flex">🇮🇩 Untuk Masyarakat Indonesia</div>
-                <h1 class="text-5xl lg:text-6xl font-bold text-rich-black leading-tight mb-6" style="letter-spacing:-0.02em;">
-                    Cerdas Kelola<br>
-                    <span class="text-deep-fern-green">Keuanganmu</span><br>
-                    Mulai Hari Ini
-                </h1>
-                <p class="text-cool-gray text-lg mb-8 max-w-lg leading-relaxed">
-                    Pelajari literasi keuangan, hindari jebakan pinjol ilegal dan judi online. Platform edukasi finansial berbasis data, terukur dan interaktif.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="btn-primary text-base px-6 py-3">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            Lanjut Belajar
-                        </a>
-                    @else
-                        <a href="{{ route('register') }}" class="btn-primary text-base px-6 py-3">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
-                            Daftar Gratis
-                        </a>
-                        <a href="{{ route('login') }}" class="btn-secondary text-base px-6 py-3">Sudah punya akun? Masuk</a>
-                    @endauth
-                </div>
-                <div class="flex items-center gap-6 mt-10 pt-8 border-t border-green-200">
-                    <div><p class="text-2xl font-bold text-rich-black">2.263</p><p class="text-xs text-cool-gray">Pinjol diblokir OJK 2025</p></div>
-                    <div class="w-px h-10 bg-gray-200"></div>
-                    <div><p class="text-2xl font-bold text-rich-black">Rp 9T</p><p class="text-xs text-cool-gray">Kerugian judol per tahun</p></div>
-                    <div class="w-px h-10 bg-gray-200"></div>
-                    <div><p class="text-2xl font-bold text-deep-fern-green">Gratis</p><p class="text-xs text-cool-gray">Seluruh konten edukasi</p></div>
-                </div>
-            </div>
+{{-- ===== STORY SCROLL ANIMATION SECTIONS ===== --}}
+<main id="cerdasfin-story" class="w-full overflow-x-hidden">
 
-            {{-- Hero visual --}}
-            <div class="hidden lg:block animate-fade-in-up delay-200">
-                <div class="relative">
-                    <div class="card-elevated p-8 rounded-3xl">
-                        <div class="flex items-center gap-3 mb-6">
-                            <div class="avatar">F</div>
-                            <div>
-                                <p class="font-semibold text-rich-black text-sm">Fahrel</p>
-                                <p class="text-xs text-deep-fern-green">Level Mahir • 350 poin</p>
-                            </div>
-                            <div class="ml-auto badge-green">🏆 Expert</div>
-                        </div>
-                        <div class="space-y-4">
-                            <div class="p-4 bg-mint-green-glow rounded-2xl">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium text-rich-black">Dasar Literasi Keuangan</span>
-                                    <span class="text-sm font-bold text-deep-fern-green">85%</span>
-                                </div>
-                                <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
-                                <p class="text-xs text-cool-gray mt-1">Pre-test: 60 → Post-test: 85 ✅</p>
-                            </div>
-                            <div class="p-4 bg-melon-tint rounded-2xl">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium text-rich-black">Bahaya Pinjol Ilegal</span>
-                                    <span class="text-sm font-bold text-terra-cotta">40%</span>
-                                </div>
-                                <div class="progress-bar"><div class="progress-fill-orange" style="width:40%;height:8px;border-radius:9999px;"></div></div>
-                            </div>
-                            <div class="flex gap-3">
-                                <div class="flex-1 p-3 bg-subtle-ash rounded-xl text-center">
-                                    <p class="text-xl font-bold text-rich-black">3</p>
-                                    <p class="text-xs text-cool-gray">Sertifikat</p>
-                                </div>
-                                <div class="flex-1 p-3 bg-subtle-ash rounded-xl text-center">
-                                    <p class="text-xl font-bold text-deep-fern-green">7🔥</p>
-                                    <p class="text-xs text-cool-gray">Streak Hari</p>
-                                </div>
-                                <div class="flex-1 p-3 bg-subtle-ash rounded-xl text-center">
-                                    <p class="text-xl font-bold text-rich-black">350</p>
-                                    <p class="text-xs text-cool-gray">Total Poin</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- Floating badge --}}
-                    <div class="absolute -top-4 -right-4 bg-deep-fern-green text-white px-4 py-2 rounded-2xl text-sm font-bold shadow-lg">
-                        ✅ Post-test +25 poin!
-                    </div>
-                    <div class="absolute -bottom-4 -left-4 bg-melon-tint text-terra-cotta px-4 py-2 rounded-2xl text-sm font-bold shadow-md border border-light-peach">
-                        ⚠️ Hindari pinjol ilegal!
-                    </div>
-                </div>
-            </div>
+  {{-- SECTION 01 — Hero --}}
+  <section data-flow-section aria-label="Hero CerdasFin"
+    class="relative min-h-screen w-full overflow-hidden"
+    style="background: linear-gradient(135deg, #f0fdf4 0%, #d1fadf 50%, #e1fdea 100%);">
+    <div data-flow-inner class="flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-6 px-[4vw] pt-[clamp(2rem,8vw,4vw)] pb-[4vw]" style="transform-origin: bottom left;">
+
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-deep-fern-green">01 — Tentang CerdasFin</span>
+        <div class="badge-green">🌱 Platform Terpercaya</div>
+      </div>
+
+      <hr class="border-none border-t border-black/10" style="border-top:1px solid rgba(11,116,67,0.2);">
+
+      <div>
+        <h1 class="font-bold leading-[0.88] uppercase tracking-tight text-rich-black"
+            style="font-size: clamp(3.5rem,11vw,13rem);">
+          Cerdas<br>Kelola<br><span style="color:#0b7443;">Keuangan</span>
+        </h1>
+      </div>
+
+      <hr style="border-top:1px solid rgba(11,116,67,0.2);">
+
+      <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
+        <p class="max-w-[50ch] leading-relaxed text-cool-gray" style="font-size:clamp(1rem,2.2vw,1.6rem);">
+          Platform edukasi literasi keuangan untuk masyarakat Indonesia. Hindari jebakan pinjol ilegal & judi online — mulai dari sini.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+          @auth
+            <a href="{{ route('dashboard') }}" class="btn-primary">Ke Dashboard →</a>
+          @else
+            <a href="{{ route('register') }}" class="btn-primary" style="font-size:1rem;padding:14px 28px;">Daftar Gratis</a>
+            <a href="{{ route('login') }}" class="btn-secondary" style="font-size:1rem;padding:14px 28px;">Masuk</a>
+          @endauth
         </div>
+      </div>
+
+      {{-- Stats Row --}}
+      <div class="grid grid-cols-3 gap-4 mt-4">
+        <div class="bg-white/70 backdrop-blur rounded-2xl p-5 border border-white/50">
+          <p class="text-3xl font-bold text-rich-black">2.263</p>
+          <p class="text-xs text-cool-gray mt-1">Pinjol diblokir OJK 2025</p>
+        </div>
+        <div class="bg-white/70 backdrop-blur rounded-2xl p-5 border border-white/50">
+          <p class="text-3xl font-bold" style="color:#0b7443;">Rp 9T</p>
+          <p class="text-xs text-cool-gray mt-1">Kerugian judol per tahun</p>
+        </div>
+        <div class="bg-white/70 backdrop-blur rounded-2xl p-5 border border-white/50">
+          <p class="text-3xl font-bold text-rich-black">Gratis</p>
+          <p class="text-xs text-cool-gray mt-1">Seluruh konten edukasi</p>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-{{-- ===== 4 MODUL UTAMA ===== --}}
-<section class="section">
-    <div class="container-cf">
-        <div class="text-center mb-12">
-            <div class="badge-gray mb-4">📚 Modul Pembelajaran</div>
-            <h2 class="text-4xl font-bold text-rich-black mb-4">4 Modul Utama CerdasFin</h2>
-            <p class="text-cool-gray text-lg max-w-2xl mx-auto">Kurikulum terstruktur dari dasar literasi hingga perlindungan aktif dari ancaman finansial</p>
-        </div>
+  {{-- SECTION 02 — 4 Modul Utama --}}
+  <section data-flow-section aria-label="4 Modul Utama"
+    class="relative min-h-screen w-full overflow-hidden"
+    style="background: #0b7443; color: #fff;">
+    <div data-flow-inner class="flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-6 px-[4vw] pt-[clamp(2rem,8vw,4vw)] pb-[4vw]" style="transform-origin: bottom left;">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            @php
-            $modulCards = [
-                ['icon'=>'💰','title'=>'Dasar Literasi Keuangan','desc'=>'Pahami konsep dasar keuangan: menabung, anggaran 50/30/20, dan fondasi finansial yang kuat.','color'=>'mint','badge'=>'Fondasi','route'=>'modules.index'],
-                ['icon'=>'🚫','title'=>'Bahaya Pinjol Ilegal','desc'=>'Kenali ciri-ciri pinjol ilegal, dampak bunga majemuk yang mencekik, dan cara melaporkannya ke OJK.','color'=>'peach','badge'=>'Waspada','route'=>'modules.index'],
-                ['icon'=>'🎰','title'=>'Bahaya Judi Online','desc'=>'Pahami matematika kekalahan judi online, dampak psikologis, dan strategi keluar dari kecanduan.','color'=>'peach','badge'=>'Lindungi Diri','route'=>'modules.index'],
-                ['icon'=>'📈','title'=>'Pengelolaan Keuangan Sehat','desc'=>'Investasi aman (emas, deposito), dana darurat, dan perencanaan finansial jangka panjang.','color'=>'mint','badge'=>'Sejahtera','route'=>'modules.index'],
-            ];
-            @endphp
+      <span class="text-xs font-bold uppercase tracking-[0.2em] text-green-200">02 — Modul Pembelajaran</span>
 
-            @foreach($modulCards as $i => $card)
-            <div class="card-{{ $card['color'] }} p-8 rounded-2xl hover:scale-[1.01] transition-transform duration-200 animate-fade-in-up delay-{{ ($i+1)*100 }}">
-                <div class="flex items-start justify-between mb-4">
-                    <div class="text-4xl">{{ $card['icon'] }}</div>
-                    <div class="badge-{{ $card['color']==='mint'?'green':'peach' }}">{{ $card['badge'] }}</div>
-                </div>
-                <h3 class="text-xl font-bold text-rich-black mb-2">{{ $card['title'] }}</h3>
-                <p class="text-cool-gray text-sm mb-6 leading-relaxed">{{ $card['desc'] }}</p>
-                <a href="{{ route($card['route']) }}" class="flex items-center gap-2 text-sm font-semibold text-deep-fern-green hover:gap-3 transition-all">
-                    Mulai Belajar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                </a>
-            </div>
-            @endforeach
-        </div>
+      <hr style="border-top:1px solid rgba(255,255,255,0.25);">
+
+      <div>
+        <h2 class="font-bold leading-[0.88] uppercase tracking-tight text-white"
+            style="font-size:clamp(3rem,10vw,12rem);">
+          4 Modul<br>Utama
+        </h2>
+      </div>
+
+      <hr style="border-top:1px solid rgba(255,255,255,0.25);">
+
+      <p class="max-w-[50ch] leading-relaxed text-green-100" style="font-size:clamp(1rem,2.2vw,1.6rem);">
+        Kurikulum terstruktur dari dasar literasi hingga perlindungan aktif dari ancaman finansial.
+      </p>
+
+      <hr style="border-top:1px solid rgba(255,255,255,0.25);">
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @php $modulesData = [
+          ['💰','Fondasi','Dasar Literasi Keuangan','Anggaran 50/30/20, menabung, fondasi finansial kuat.','dasar-literasi-keuangan'],
+          ['🚫','Waspada','Bahaya Pinjol Ilegal','Kenali ciri pinjol ilegal & dampak bunga majemuk mencekik.','bahaya-pinjol-ilegal'],
+          ['🎰','Lindungi','Bahaya Judi Online','Matematika kekalahan judol & strategi keluar kecanduan.','bahaya-judi-online'],
+          ['📈','Sejahtera','Pengelolaan Keuangan Sehat','Investasi emas, deposito, dana darurat, reksa dana.','pengelolaan-keuangan-sehat'],
+        ]; @endphp
+        @foreach($modulesData as [$icon, $tag, $title, $desc, $slug])
+        <a href="{{ route('modules.index') }}" class="group flex items-start gap-4 bg-white/10 hover:bg-white/20 rounded-2xl p-5 transition-all border border-white/20">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style="background:rgba(255,255,255,0.15);">{{ $icon }}</div>
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-green-200">{{ $tag }}</span>
+            <p class="font-bold text-white mt-0.5">{{ $title }}</p>
+            <p class="text-sm text-green-100 mt-1">{{ $desc }}</p>
+          </div>
+          <svg class="w-5 h-5 text-green-200 ml-auto mt-1 group-hover:translate-x-1 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        @endforeach
+      </div>
+
+      <div class="flex justify-center mt-4">
+        <a href="{{ route('modules.index') }}" class="btn-secondary" style="background:white;color:#0b7443;border-color:white;">Lihat Semua Modul →</a>
+      </div>
     </div>
-</section>
+  </section>
 
-{{-- ===== KURSUS POPULER ===== --}}
-@if($popularCourses->count() > 0)
-<section class="section-alt">
-    <div class="container-cf">
-        <div class="flex items-center justify-between mb-10">
-            <div>
-                <div class="badge-green mb-3">🎓 Kursus</div>
-                <h2 class="text-3xl font-bold text-rich-black">Kursus Populer</h2>
-            </div>
-            <a href="{{ route('courses.index') }}" class="btn-ghost text-sm">Lihat Semua →</a>
+  {{-- SECTION 03 — Fitur Platform --}}
+  <section data-flow-section aria-label="Fitur Platform"
+    class="relative min-h-screen w-full overflow-hidden"
+    style="background: #F5F0E8; color: #000;">
+    <div data-flow-inner class="flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-6 px-[4vw] pt-[clamp(2rem,8vw,4vw)] pb-[4vw]" style="transform-origin: bottom left;">
+
+      <span class="text-xs font-bold uppercase tracking-[0.2em] text-cool-gray">03 — Kenapa CerdasFin?</span>
+
+      <hr style="border-top:1px solid rgba(0,0,0,0.15);">
+
+      <div>
+        <h2 class="font-bold leading-[0.88] uppercase tracking-tight text-rich-black"
+            style="font-size:clamp(3rem,10vw,12rem);">
+          Platform<br>Lengkap.<br><span style="color:#0b7443;">Gratis.</span>
+        </h2>
+      </div>
+
+      <hr style="border-top:1px solid rgba(0,0,0,0.15);">
+
+      <p class="max-w-[50ch] leading-relaxed text-cool-gray" style="font-size:clamp(1rem,2.2vw,1.5rem);">
+        Dirancang khusus untuk dampak nyata literasi keuangan masyarakat Indonesia.
+      </p>
+
+      <hr style="border-top:1px solid rgba(0,0,0,0.15);">
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        @php $features = [
+          ['📊','Pre-test & Post-test','Ukur peningkatan pengetahuan secara akurat sebelum & sesudah belajar.'],
+          ['🎮','Gamifikasi & Badge','Kumpulkan poin, raih badge, pertahankan streak belajar harian.'],
+          ['🧮','Simulasi Keuangan','Coba simulasi bunga pinjol, tabungan, dan investasi real-time.'],
+          ['🏆','Sertifikat Digital','Dapatkan sertifikat otomatis setelah menyelesaikan modul.'],
+          ['💬','Forum Komunitas','Diskusi, berbagi tips, dan belajar dari mentor berpengalaman.'],
+          ['🛡️','Anti Pinjol & Judol','Edukasi interaktif untuk mengenali & menghindari jebakan finansial.'],
+        ]; @endphp
+        @foreach($features as [$icon, $title, $desc])
+        <div class="bg-white rounded-2xl p-5 border border-black/5 hover:shadow-md transition-shadow">
+          <div class="text-3xl mb-3">{{ $icon }}</div>
+          <p class="font-bold text-rich-black text-sm mb-1">{{ $title }}</p>
+          <p class="text-xs text-cool-gray leading-relaxed">{{ $desc }}</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach($popularCourses as $course)
-            <div class="card overflow-hidden group hover:shadow-lg transition-shadow duration-300">
-                <div class="h-40 bg-mint-green-glow flex items-center justify-center overflow-hidden">
-                    <svg class="w-14 h-14 text-deep-fern-green opacity-30 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                </div>
-                <div class="p-6">
-                    <p class="text-xs text-deep-fern-green font-semibold mb-1">{{ $course->module->title }}</p>
-                    <h3 class="font-bold text-rich-black mb-2 line-clamp-2">{{ $course->title }}</h3>
-                    <p class="text-sm text-cool-gray mb-4 line-clamp-2">{{ $course->description }}</p>
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs text-cool-gray">📚 {{ $course->lessons()->count() }} pelajaran</span>
-                        <a href="{{ route('courses.show', $course) }}" class="text-sm font-semibold text-deep-fern-green hover:underline">Mulai →</a>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
+        @endforeach
+      </div>
     </div>
-</section>
-@endif
+  </section>
 
-{{-- ===== FITUR UNGGULAN ===== --}}
-<section class="section">
-    <div class="container-cf">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold text-rich-black mb-4">Kenapa CerdasFin?</h2>
-            <p class="text-cool-gray text-lg max-w-xl mx-auto">Platform yang dirancang khusus untuk dampak nyata literasi keuangan</p>
+  {{-- SECTION 04 — Simulasi Keuangan Teaser --}}
+  <section data-flow-section aria-label="Simulasi"
+    class="relative min-h-screen w-full overflow-hidden"
+    style="background: #000; color: #fff;">
+    <div data-flow-inner class="flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-6 px-[4vw] pt-[clamp(2rem,8vw,4vw)] pb-[4vw]" style="transform-origin: bottom left;">
+
+      <span class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">04 — Simulasi Keuangan</span>
+
+      <hr style="border-top:1px solid rgba(255,255,255,0.15);">
+
+      <div>
+        <h2 class="font-bold leading-[0.88] uppercase tracking-tight"
+            style="font-size:clamp(3rem,10vw,12rem); color:#61bc76;">
+          Hitung<br>Sendiri.<br>Sadar<br>Sendiri.
+        </h2>
+      </div>
+
+      <hr style="border-top:1px solid rgba(255,255,255,0.15);">
+
+      <p class="max-w-[50ch] leading-relaxed text-gray-300" style="font-size:clamp(1rem,2.2vw,1.5rem);">
+        Simulasi interaktif bunga pinjol ilegal, kalkulator investasi aman, dan perencana anggaran 50/30/20.
+      </p>
+
+      <hr style="border-top:1px solid rgba(255,255,255,0.15);">
+
+      <div class="flex flex-wrap gap-[3vw]">
+        <div class="min-w-[180px] flex-1">
+          <p class="mb-2 text-sm font-bold uppercase tracking-wider text-green-400">Bunga Pinjol</p>
+          <p class="text-sm leading-relaxed text-gray-400">Lihat sendiri bagaimana Rp 1 Juta bisa menjadi Rp 2.5 Juta dalam 90 hari dengan bunga 1%/hari.</p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @php $features = [
-                ['icon'=>'📊','title'=>'Pre-test & Post-test','desc'=>'Ukur peningkatan pengetahuanmu secara akurat sebelum dan setelah belajar dengan grafik yang jelas.','color'=>'mint'],
-                ['icon'=>'🎮','title'=>'Gamifikasi & Badge','desc'=>'Kumpulkan poin, raih badge, dan pertahankan streak belajar harian untuk motivasi yang konsisten.','color'=>'peach'],
-                ['icon'=>'🔢','title'=>'Simulasi Keuangan','desc'=>'Coba simulasi bunga pinjol, tabungan, dan investasi aman secara interaktif dan real-time.','color'=>'mint'],
-                ['icon'=>'🏆','title'=>'Sertifikat Digital','desc'=>'Dapatkan sertifikat otomatis setelah menyelesaikan modul sebagai bukti kompetensi finansial.','color'=>'peach'],
-                ['icon'=>'💬','title'=>'Forum Komunitas','desc'=>'Diskusi, berbagi tips, dan belajar dari pengalaman sesama pengguna bersama mentor berpengalaman.','color'=>'mint'],
-                ['icon'=>'🛡️','title'=>'Anti Pinjol & Judol','desc'=>'Edukasi interaktif untuk mengenali dan menghindari jebakan pinjol ilegal dan judi online.','color'=>'peach'],
-            ]; @endphp
-            @foreach($features as $i => $f)
-            <div class="card p-6 animate-fade-in-up delay-{{ ($i % 3 + 1) * 100 }}">
-                <div class="text-3xl mb-4">{{ $f['icon'] }}</div>
-                <h3 class="font-bold text-rich-black mb-2">{{ $f['title'] }}</h3>
-                <p class="text-sm text-cool-gray leading-relaxed">{{ $f['desc'] }}</p>
-            </div>
-            @endforeach
+        <div class="min-w-[180px] flex-1">
+          <p class="mb-2 text-sm font-bold uppercase tracking-wider text-green-400">Investasi Aman</p>
+          <p class="text-sm leading-relaxed text-gray-400">Bandingkan hasil tabungan deposito vs reksa dana selama 5-30 tahun dengan compound interest.</p>
         </div>
+        <div class="min-w-[180px] flex-1">
+          <p class="mb-2 text-sm font-bold uppercase tracking-wider text-green-400">Anggaran 50/30/20</p>
+          <p class="text-sm leading-relaxed text-gray-400">Masukkan penghasilanmu, dapatkan rincian alokasi ideal untuk kebutuhan, keinginan & tabungan.</p>
+        </div>
+      </div>
+
+      <hr style="border-top:1px solid rgba(255,255,255,0.15);">
+
+      <div class="flex justify-start mt-2">
+        <a href="{{ route('simulation.index') }}" class="btn-primary" style="background:#61bc76;color:#000;font-size:1rem;padding:14px 28px;">Coba Simulasi Sekarang →</a>
+      </div>
     </div>
-</section>
+  </section>
 
-{{-- ===== CTA ===== --}}
-<section class="bg-deep-fern-green py-20">
-    <div class="container-cf text-center">
-        <h2 class="text-4xl font-bold text-white mb-4">Mulai Perjalanan Finansialmu</h2>
-        <p class="text-muted-sage text-lg mb-8 max-w-xl mx-auto">Bergabunglah dan tingkatkan literasi keuanganmu. Gratis selamanya untuk semua masyarakat Indonesia.</p>
+  {{-- SECTION 05 — CTA Join --}}
+  <section data-flow-section aria-label="Bergabung"
+    class="relative min-h-screen w-full overflow-hidden"
+    style="background: linear-gradient(135deg, #0b7443 0%, #095f38 100%); color: #fff;">
+    <div data-flow-inner class="flow-art-container relative flex min-h-screen w-full flex-col justify-between gap-6 px-[4vw] pt-[clamp(2rem,8vw,4vw)] pb-[4vw]" style="transform-origin: bottom left;">
+
+      <span class="text-xs font-bold uppercase tracking-[0.2em] text-green-300">05 — Bergabung Sekarang</span>
+
+      <hr style="border-top:1px solid rgba(255,255,255,0.3);">
+
+      <div>
+        <h2 class="font-bold leading-[0.88] uppercase tracking-tight text-white"
+            style="font-size:clamp(3.5rem,11vw,13rem);">
+          Mulai<br>Hari<br>Ini.
+        </h2>
+      </div>
+
+      <hr style="border-top:1px solid rgba(255,255,255,0.3);">
+
+      <p class="max-w-[50ch] leading-relaxed text-green-100" style="font-size:clamp(1rem,2.2vw,1.6rem);">
+        Bergabunglah dan tingkatkan literasi keuanganmu. Gratis selamanya untuk semua masyarakat Indonesia.
+      </p>
+
+      <hr style="border-top:1px solid rgba(255,255,255,0.3);">
+
+      <div class="flex flex-wrap gap-4 items-center">
         @auth
-            <a href="{{ route('courses.index') }}" class="inline-flex items-center gap-2 bg-white text-deep-fern-green px-8 py-4 rounded-xl font-bold text-lg hover:bg-muted-sage transition-colors">
-                📚 Jelajahi Semua Kursus
-            </a>
+          <a href="{{ route('dashboard') }}" class="btn-primary" style="background:white;color:#0b7443;font-size:1rem;padding:16px 32px;font-weight:700;">Ke Dashboard Saya →</a>
+          <a href="{{ route('modules.index') }}" class="btn-secondary" style="border-color:rgba(255,255,255,0.5);color:white;font-size:1rem;padding:16px 32px;">Lihat Modul</a>
         @else
-            <a href="{{ route('register') }}" class="inline-flex items-center gap-2 bg-white text-deep-fern-green px-8 py-4 rounded-xl font-bold text-lg hover:bg-muted-sage transition-colors">
-                🚀 Daftar Gratis Sekarang
-            </a>
+          <a href="{{ route('register') }}" class="btn-primary" style="background:white;color:#0b7443;font-size:1rem;padding:16px 32px;font-weight:700;">🌱 Daftar Gratis Sekarang</a>
+          <a href="{{ route('login') }}" class="btn-secondary" style="border-color:rgba(255,255,255,0.5);color:white;font-size:1rem;padding:16px 32px;">Sudah Punya Akun? Masuk</a>
         @endauth
-    </div>
-</section>
+      </div>
 
+      <div class="grid grid-cols-3 gap-4 mt-4">
+        <div class="bg-white/10 rounded-2xl p-4 text-center">
+          <p class="text-2xl font-bold text-white">4</p>
+          <p class="text-xs text-green-200 mt-1">Modul Utama</p>
+        </div>
+        <div class="bg-white/10 rounded-2xl p-4 text-center">
+          <p class="text-2xl font-bold text-white">100%</p>
+          <p class="text-xs text-green-200 mt-1">Gratis Selamanya</p>
+        </div>
+        <div class="bg-white/10 rounded-2xl p-4 text-center">
+          <p class="text-2xl font-bold text-white">OJK</p>
+          <p class="text-xs text-green-200 mt-1">Berbasis Data Resmi</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
 @endsection
+
+@push('head')
+{{-- GSAP via CDN (fallback jika npm build belum include) --}}
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+@endpush
+
+@push('scripts')
+<script>
+(function() {
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Removed reduced motion check to ensure animation runs.
+
+  const container = document.getElementById('cerdasfin-story');
+  if (!container) return;
+
+  const sections = Array.from(container.querySelectorAll('[data-flow-section]'));
+  if (sections.length === 0) return;
+
+  const triggers = [];
+
+  sections.forEach((section, i) => {
+    // Set stacking z-index
+    gsap.set(section, { zIndex: i + 1, position: 'relative' });
+
+    const inner = section.querySelector('.flow-art-container');
+    if (!inner) return;
+
+    // All sections after first: start rotated, animate to flat on scroll in
+    if (i > 0) {
+      gsap.set(inner, { rotation: 28, transformOrigin: 'bottom left' });
+
+      const tween = gsap.to(inner, {
+        rotation: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'top 20%',
+          scrub: 1,
+        }
+      });
+      if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
+    }
+
+    // All sections except last: pin while next section scrolls in
+    if (i < sections.length - 1) {
+      triggers.push(
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'bottom bottom',
+          end: 'bottom top',
+          pin: true,
+          pinSpacing: false,
+        })
+      );
+    }
+  });
+
+  ScrollTrigger.refresh();
+
+  // Content fade-in on each section
+  sections.forEach((section) => {
+    const inner = section.querySelector('.flow-art-container');
+    if (!inner) return;
+
+    gsap.fromTo(inner.children,
+      { opacity: 0, y: 20 },
+      {
+        opacity: 1,
+        y: 0,
+        stagger: 0.08,
+        duration: 0.6,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+        }
+      }
+    );
+  });
+})();
+</script>
+@endpush

@@ -1,5 +1,4 @@
 @extends('layout')
-
 @section('title', 'Dashboard — CerdasFin')
 
 @section('content')
@@ -12,16 +11,12 @@
             <p class="text-cool-gray mt-1">Terus semangat belajar literasi keuangan hari ini.</p>
         </div>
         @if($userPoints)
-        <div class="flex items-center gap-4">
-            @php
-                $pts = $userPoints->total_points ?? 0;
-                $level = $pts < 100 ? ['label'=>'Pemula','class'=>'level-pemula'] :
-                         ($pts < 300 ? ['label'=>'Pelajar','class'=>'level-pelajar'] :
-                         ($pts < 700 ? ['label'=>'Mahir','class'=>'level-mahir'] : ['label'=>'Expert','class'=>'level-expert']));
-            @endphp
-            <div class="{{ $level['class'] }}">⭐ {{ $level['label'] }}</div>
+        <div class="flex items-center gap-4 flex-wrap">
+            <span class="{{ $levelLabel === 'Expert' || $levelLabel === 'Master' ? 'level-expert' : ($levelLabel === 'Mahir' ? 'level-mahir' : ($levelLabel === 'Pelajar' ? 'level-pelajar' : 'level-pemula')) }}">
+                ⭐ {{ $levelLabel }}
+            </span>
             <div class="card px-4 py-2 flex items-center gap-2">
-                <span class="text-2xl font-bold text-deep-fern-green">{{ number_format($pts) }}</span>
+                <span class="text-2xl font-bold text-deep-fern-green">{{ number_format($totalPoints) }}</span>
                 <span class="text-xs text-cool-gray">poin</span>
             </div>
             <a href="{{ route('courses.index') }}" class="btn-primary text-sm">+ Pelajaran Baru</a>
@@ -43,12 +38,12 @@
         </div>
         <div class="stat-card animate-fade-in-up delay-200">
             <div class="text-2xl mb-1">🏆</div>
-            <div class="stat-number text-terra-cotta">{{ $certificates }}</div>
+            <div class="stat-number" style="color:#715039;">{{ $certificates }}</div>
             <div class="stat-label">Sertifikat</div>
         </div>
         <div class="stat-card animate-fade-in-up delay-300">
             <div class="text-2xl mb-1">🔥</div>
-            <div class="stat-number text-deep-fern-green">{{ $userPoints->total_points ?? 0 }}</div>
+            <div class="stat-number text-deep-fern-green">{{ number_format($totalPoints) }}</div>
             <div class="stat-label">Total Poin</div>
         </div>
     </div>
@@ -58,8 +53,25 @@
         {{-- Left: Progress & Chart --}}
         <div class="lg:col-span-2 space-y-6">
 
+            {{-- Level Progress Bar --}}
+            @if($userPoints && $levelProgress['next'])
+            <div class="card p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="font-bold text-rich-black">⬆️ Progress Level</h2>
+                    <span class="text-sm text-cool-gray">{{ $levelProgress['needed'] }} poin lagi ke <strong>{{ $levelProgress['next']['label'] }}</strong></span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width:{{ $levelProgress['progress'] }}%"></div>
+                </div>
+                <div class="flex justify-between text-xs text-cool-gray mt-1">
+                    <span>{{ $levelProgress['current']['label'] }} ({{ $totalPoints }} poin)</span>
+                    <span>{{ $levelProgress['next']['label'] }} ({{ $levelProgress['next']['min'] }} poin)</span>
+                </div>
+            </div>
+            @endif
+
             {{-- Pre/Post Test Chart --}}
-            @if($quizResults->count() > 0)
+            @if($chartData->count() > 0)
             <div class="card p-6">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="font-bold text-rich-black">📊 Grafik Perkembangan Belajar</h2>
@@ -106,16 +118,19 @@
                 @endforelse
             </div>
 
-            {{-- Quiz Terbaru --}}
-            @if($quizResults->count() > 0)
+            {{-- Aktivitas Quiz Terbaru --}}
+            @if($recentActivity->count() > 0)
             <div class="card p-6">
-                <h2 class="font-bold text-rich-black mb-4">🎯 Hasil Quiz Terbaru</h2>
+                <h2 class="font-bold text-rich-black mb-4">🎯 Aktivitas Quiz Terbaru</h2>
                 <div class="space-y-3">
-                    @foreach($quizResults as $result)
+                    @foreach($recentActivity as $result)
                     <div class="flex items-center justify-between p-3 rounded-xl bg-subtle-ash">
                         <div>
                             <p class="text-sm font-medium text-rich-black">{{ $result->quiz->title ?? 'Quiz' }}</p>
-                            <p class="text-xs text-cool-gray">{{ $result->completed_at?->diffForHumans() ?? '' }}</p>
+                            <p class="text-xs text-cool-gray">
+                                {{ $result->quiz->course->module->title ?? '' }}
+                                · {{ $result->completed_at?->diffForHumans() ?? '' }}
+                            </p>
                         </div>
                         <div class="text-right">
                             @php $sc = $result->score ?? 0; @endphp
@@ -127,6 +142,7 @@
                 </div>
             </div>
             @endif
+
         </div>
 
         {{-- Right Sidebar --}}
@@ -142,25 +158,20 @@
                     </div>
                 </div>
                 @if($userPoints)
-                @php
-                    $pts = $userPoints->total_points ?? 0;
-                    $nextLevel = $pts < 100 ? 100 : ($pts < 300 ? 300 : ($pts < 700 ? 700 : 9999));
-                    $pct = $nextLevel < 9999 ? min(100, round($pts / $nextLevel * 100)) : 100;
-                @endphp
                 <div class="mb-3">
                     <div class="flex justify-between text-xs mb-1">
                         <span class="text-cool-gray">Progress ke level berikutnya</span>
-                        <span class="font-bold text-terra-cotta">{{ $pts }} / {{ $nextLevel }}</span>
+                        <span class="font-bold" style="color:#715039;">{{ $totalPoints }} / {{ $levelProgress['next']['min'] ?? '∞' }}</span>
                     </div>
-                    <div class="progress-bar"><div class="progress-fill-orange" style="width:{{ $pct }}%;height:8px;border-radius:9999px;"></div></div>
+                    <div class="progress-bar"><div class="progress-fill-orange" style="width:{{ $levelProgress['progress'] ?? 0 }}%;height:8px;border-radius:9999px;"></div></div>
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-center">
                     <div class="bg-white/60 rounded-xl py-2">
-                        <p class="font-bold text-rich-black">{{ $userPoints->badge ?? 'Pemula' }}</p>
+                        <p class="font-bold text-rich-black text-sm">{{ $userPoints->badge ?? 'Pemula' }}</p>
                         <p class="text-xs text-cool-gray">Badge</p>
                     </div>
                     <div class="bg-white/60 rounded-xl py-2">
-                        <p class="font-bold text-deep-fern-green">{{ $pts }}</p>
+                        <p class="font-bold text-deep-fern-green">{{ $totalPoints }}</p>
                         <p class="text-xs text-cool-gray">Poin</p>
                     </div>
                 </div>
@@ -175,21 +186,25 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                         Jelajahi Kursus
                     </a>
+                    <a href="{{ route('modules.index') }}" class="sidebar-link w-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        Modul Pembelajaran
+                    </a>
                     <a href="{{ route('simulation.index') }}" class="sidebar-link w-full">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                         Simulasi Keuangan
                     </a>
-                    <a href="{{ route('forum.index') }}" class="sidebar-link w-full">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
-                        Forum Diskusi
+                    <a href="{{ route('leaderboard.index') }}" class="sidebar-link w-full">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        Leaderboard
                     </a>
                     <a href="{{ route('certificates.index') }}" class="sidebar-link w-full">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
                         Sertifikat Saya
                     </a>
-                    <a href="{{ route('awareness.index') }}" class="sidebar-link w-full text-terra-cotta hover:bg-melon-tint">
+                    <a href="{{ route('awareness.index') }}" class="sidebar-link w-full" style="color:#715039;">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-                        Anti Pinjol & Judol
+                        Anti Pinjol &amp; Judol
                     </a>
                 </div>
             </div>
@@ -214,27 +229,41 @@
 @endsection
 
 @push('scripts')
-@if($quizResults->count() > 0)
+@if($chartData->count() > 0)
 <script>
 const ctx = document.getElementById('scoreChart');
 if (ctx) {
+    const chartData = @json($chartData);
     new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: @json($quizResults->take(5)->map(fn($r) => Str::limit($r->quiz->title ?? 'Quiz', 20))),
-            datasets: [{
-                label: 'Skor Quiz',
-                data: @json($quizResults->take(5)->pluck('score')),
-                backgroundColor: 'rgba(11, 116, 67, 0.7)',
-                borderColor: '#0b7443',
-                borderWidth: 2,
-                borderRadius: 8,
-            }]
+            labels: chartData.map(d => d.module),
+            datasets: [
+                {
+                    label: 'Pre-test',
+                    data: chartData.map(d => d.pre_test),
+                    backgroundColor: 'rgba(97, 188, 118, 0.6)',
+                    borderColor: '#61bc76',
+                    borderWidth: 2,
+                    borderRadius: 6,
+                },
+                {
+                    label: 'Post-test',
+                    data: chartData.map(d => d.post_test),
+                    backgroundColor: 'rgba(11, 116, 67, 0.8)',
+                    borderColor: '#0b7443',
+                    borderWidth: 2,
+                    borderRadius: 6,
+                }
+            ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
+            plugins: {
+                legend: { position: 'top', labels: { font: { size: 12 } } },
+                tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw + '%' } }
+            },
             scales: {
                 y: { beginAtZero: true, max: 100, grid: { color: '#f0f0f0' }, ticks: { callback: v => v + '%' } },
                 x: { grid: { display: false } }

@@ -9,8 +9,24 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ForumPost extends Model
 {
     protected $table = 'forum_posts';
-    protected $fillable = ['forum_category_id', 'user_id', 'title', 'slug', 'content', 'is_pinned', 'is_closed'];
 
+    protected $fillable = [
+        'forum_category_id',
+        'user_id',
+        'title',
+        'slug',
+        'content',
+        'is_pinned',
+        'is_closed',
+        'views_count',
+    ];
+
+    protected $casts = [
+        'is_pinned' => 'boolean',
+        'is_closed' => 'boolean',
+    ];
+
+    // ─── Relationships ─────────────────────────────────────
     public function category(): BelongsTo
     {
         return $this->belongsTo(ForumCategory::class, 'forum_category_id');
@@ -26,7 +42,8 @@ class ForumPost extends Model
         return $this->hasMany(ForumComment::class);
     }
 
-    public function incrementViews()
+    // ─── Methods ───────────────────────────────────────────
+    public function incrementViews(): void
     {
         $this->increment('views_count');
     }
